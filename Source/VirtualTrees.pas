@@ -3083,9 +3083,11 @@ type
     function GetNodeAt(X, Y: Integer): PVirtualNode; overload;
     function GetNodeAt(X, Y: Integer; Relative: Boolean; var NodeTop: Integer): PVirtualNode; overload;
     function GetNodeData(Node: PVirtualNode): Pointer; overload;
+{$if FPC_FULLVERSION > 30100}
     function GetNodeData<T>(pNode: PVirtualNode): T; overload; inline;
     function GetNodeDataAt<T:class>(pXCoord: Integer; pYCoord: Integer): T;
     function GetFirstSelectedNodeData<T>(): T;
+{$endif}
     function GetNodeLevel(Node: PVirtualNode): Cardinal;
     function GetPrevious(Node: PVirtualNode; ConsiderChildrenAbove: Boolean = False): PVirtualNode;
     function GetPreviousChecked(Node: PVirtualNode; State: TCheckState = csCheckedNormal;
@@ -28257,6 +28259,7 @@ begin
   end;
 end;
 
+{$if FPC_FULLVERSION > 30100}
 //----------------------------------------------------------------------------------------------------------------------
 
 function TBaseVirtualTree.GetNodeData<T>(pNode: PVirtualNode): T;
@@ -28298,6 +28301,7 @@ function TBaseVirtualTree.GetFirstSelectedNodeData<T>(): T;
 begin
   Result := T(Self.GetNodeData(GetFirstSelected())^);
 end;
+{$endif}
 
 //----------------------------------------------------------------------------------------------------------------------
 
